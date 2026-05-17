@@ -3,7 +3,6 @@ import {
   MapContainer,
   TileLayer,
   Marker,
-  Popup,
   Polyline,
   Circle,
   AttributionControl,
@@ -13,14 +12,15 @@ import {
 } from 'react-leaflet'
 import type { LatLngBoundsExpression } from 'leaflet'
 import { allLocations, baseAreas, driveRoutes, trips } from '../data'
-import type { BaseArea, Category, Location, TripId } from '../data/types'
+import type { Category, Location, TripId } from '../data/types'
 import { buildMarkerIcon, markerSize } from './markerIcon'
-import { LocationPopup } from './LocationPopup'
-import { formatDate } from '../utils/format'
 
 interface Props {
   activeTrips: Set<TripId>
   activeCategories: Set<Category>
+  onSelectLocation: (id: string) => void
+  onSelectBaseArea: (id: string) => void
+  onDeselect: () => void
 }
 
 // Portugal-spanning bounds — fits Lisbon, west coast, Algarve.
@@ -29,10 +29,6 @@ const INITIAL_BOUNDS: LatLngBoundsExpression = [
   [39.85, -7.60], // NE (Nazaré / inland buffer)
 ]
 
-// Categories whose labels are always candidates for rendering. The rest
-// only become candidates once the user has zoomed in past
-// LABEL_ZOOM_THRESHOLD. Within each tier, bbox collision filtering picks
-// which actually render (higher-priority categories win overlaps).
 const ANCHOR_CATEGORIES: ReadonlySet<Category> = new Set<Category>([
   'accommodation',
   'airport',
@@ -50,7 +46,13 @@ const LABEL_PRIORITY: Record<Category, number> = {
   restaurant: 35,
 }
 
-export function TripMap({ activeTrips, activeCategories }: Props) {
+export function TripMap({
+  activeTrips,
+  activeCategories,
+  onSelectLocation,
+  onSelectBaseArea,
+  onDeselect,
+}: Props) {
   const visibleLocations = allLocations.filter(
     (l) => activeTrips.has(l.tripId) && activeCategories.has(l.category),
   )
@@ -73,6 +75,8 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
       />
       <AttributionControl position="bottomright" prefix={false} />
 
+      <MapClickHandler onDeselect={onDeselect} />
+
       {visibleBaseAreas.map((area) => {
         const trip = trips.find((t) => t.id === area.tripId)
         const color = trip?.color ?? '#64748b'
@@ -89,12 +93,14 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
               fillColor: color,
               fillOpacity: 0.06,
             }}
+            eventHandlers={{
+              click: (e) => {
+                e.originalEvent?.stopPropagation?.()
+                onSelectBaseArea(area.id)
+              },
+            }}
           >
-            <Tooltip
-              permanent
-              direction="center"
-              className="base-area-badge"
-            >
+            <Tooltip permanent direction="center" className="base-area-badge">
               <span
                 className="base-area-badge__pill"
                 style={{ borderColor: color, color }}
@@ -102,9 +108,6 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
                 {area.nights.length}N
               </span>
             </Tooltip>
-            <Popup>
-              <BaseAreaPopup area={area} color={color} tripName={trip?.name ?? area.name} />
-            </Popup>
           </Circle>
         )
       })}
@@ -126,9 +129,16 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
         )
       })}
 
-      <Markers locations={visibleLocations} />
+      <Markers locations={visibleLocations} onSelect={onSelectLocation} />
     </MapContainer>
   )
+}
+
+function MapClickHandler({ onDeselect }: { onDeselect: () => void }) {
+  useMapEvents({
+    click: () => onDeselect(),
+  })
+  return null
 }
 
 type LabelBBox = { minX: number; maxX: number; minY: number; maxY: number }
@@ -138,11 +148,10 @@ function estimateLabelBBox(
   text: string,
   category: Category,
 ): LabelBBox {
-  // Per-tier approximate character widths — matches the font sizes in index.css.
   const charWidth =
     category === 'accommodation' ? 7.2 : category === 'airport' ? 7.0 : 5.8
   const height = category === 'accommodation' ? 16 : 14
-  const padding = 3 // breathing room so labels don't quite touch when "not overlapping"
+  const padding = 3
   const width = text.length * charWidth
   const size = markerSize(category)
   const top = point.y + size / 2 - 2
@@ -158,7 +167,13 @@ function boxesOverlap(a: LabelBBox, b: LabelBBox): boolean {
   return a.minX < b.maxX && a.maxX > b.minX && a.minY < b.maxY && a.maxY > b.minY
 }
 
-function Markers({ locations }: { locations: Location[] }) {
+function Markers({
+  locations,
+  onSelect,
+}: {
+  locations: Location[]
+  onSelect: (id: string) => void
+}) {
   const map = useMap()
   const [zoom, setZoom] = useState<number>(() => map.getZoom())
   useMapEvents({
@@ -166,8 +181,6 @@ function Markers({ locations }: { locations: Location[] }) {
   })
 
   const visibleLabelIds = useMemo(() => {
-    // Sort by priority so collision detection grants higher-priority labels
-    // the right to render and hides lower-priority overlappers.
     const sorted = [...locations].sort(
       (a, b) => LABEL_PRIORITY[b.category] - LABEL_PRIORITY[a.category],
     )
@@ -195,6 +208,12 @@ function Markers({ locations }: { locations: Location[] }) {
             key={location.id}
             position={location.coords}
             icon={buildMarkerIcon(location)}
+            eventHandlers={{
+              click: (e) => {
+                e.originalEvent?.stopPropagation?.()
+                onSelect(location.id)
+              },
+            }}
           >
             {showLabel && (
               <Tooltip
@@ -206,9 +225,6 @@ function Markers({ locations }: { locations: Location[] }) {
                 {labelFor(location)}
               </Tooltip>
             )}
-            <Popup>
-              <LocationPopup location={location} />
-            </Popup>
           </Marker>
         )
       })}
@@ -219,55 +235,4 @@ function Markers({ locations }: { locations: Location[] }) {
 function labelFor(location: Location): string {
   if (location.category === 'airport') return location.iata
   return location.name
-}
-
-function BaseAreaPopup({
-  area,
-  color,
-  tripName,
-}: {
-  area: BaseArea
-  color: string
-  tripName: string
-}) {
-  return (
-    <article className="px-3.5 py-3 text-[13px] leading-snug text-slate-800">
-      <header className="mb-2 flex items-start justify-between gap-2">
-        <div className="min-w-0">
-          <h3 className="text-[15px] font-semibold leading-tight text-slate-900">
-            {area.name}
-          </h3>
-          <p className="mt-0.5 text-[11px] uppercase tracking-wide text-slate-500">
-            {tripName} · base area
-          </p>
-        </div>
-        <span
-          className="shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-bold"
-          style={{ borderColor: color, color }}
-        >
-          {area.nights.length}N
-        </span>
-      </header>
-
-      {area.description && (
-        <p className="mb-2 text-slate-700">{area.description}</p>
-      )}
-
-      <p className="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-500">
-        Nights here
-      </p>
-      <ul className="space-y-0.5 text-[12px]">
-        {area.nights.map((iso) => (
-          <li key={iso} className="flex items-center gap-2">
-            <span
-              className="inline-block h-1.5 w-1.5 rounded-full"
-              style={{ background: color }}
-              aria-hidden="true"
-            />
-            <span>{formatDate(iso)}</span>
-          </li>
-        ))}
-      </ul>
-    </article>
-  )
 }

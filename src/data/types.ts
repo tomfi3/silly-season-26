@@ -13,7 +13,7 @@ export type TripId = 'lisbon' | 'west-coast' | 'algarve'
 // Category drives marker icon + popup template. Adding a new category requires:
 //  1. add the literal here
 //  2. add the icon glyph in src/components/icons.tsx
-//  3. add the popup template branch in src/components/LocationPopup.tsx
+//  3. add the popup template branch in src/components/SheetCards.tsx
 export type Category =
   | 'accommodation'
   | 'activity'
