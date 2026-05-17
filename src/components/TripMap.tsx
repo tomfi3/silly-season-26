@@ -76,11 +76,7 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
               fillColor: color,
               fillOpacity: 0.06,
             }}
-          >
-            <Tooltip permanent direction="center" className="base-area-label">
-              {area.name}
-            </Tooltip>
-          </Circle>
+          />
         )
       })}
 

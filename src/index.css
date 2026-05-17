@@ -96,27 +96,6 @@ body {
   letter-spacing: 0.06em;
 }
 
-/* Centred base-area name (LISBON / ALJEZUR / PORTIMÃO) — sits inside the
-   thick dashed circle. Faint so it doesn't compete with markers. */
-.leaflet-tooltip.base-area-label {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  padding: 0;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-ink);
-  opacity: 0.32;
-  pointer-events: none;
-  text-shadow:
-    0 0 4px rgb(255 255 255 / 0.85),
-    0 0 2px rgb(255 255 255 / 0.85);
-}
-.leaflet-tooltip.base-area-label::before {
-  display: none;
-}
 
 /* Hide attribution flag, keep credit line readable */
 .leaflet-control-attribution {
