@@ -76,4 +76,6 @@ one", or `'booked'` if they later share a confirmation with a `bookingRef`.
 
 ## Learnings (append-only)
 
-- _(empty)_
+- Mobile property page shows the address as plain text under the title (no pin icon on phones). Free-form address + property name is enough to find exact coords via a Google Maps search.
+- Vale da Telha addresses on Booking.com only give the urbanisation block (e.g. "Sector B Bloco Q Fração L") rather than a street — that's fine for a marker, the urbanisation centroid is close enough.
+- "Recommended for N adults" line under the title confirms `guests` reliably; use it rather than inferring from bed counts.

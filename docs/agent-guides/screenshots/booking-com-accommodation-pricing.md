@@ -86,4 +86,6 @@ Round to whole units. If tax is shown separately, **exclude** it from
 
 ## Learnings (append-only)
 
-- _(empty)_
+- When the pricing screenshot comes paired with an info screenshot (same property, same session), process them as one entry — extract `name`/address from the info shot, dates/price from the pricing shot. The "Beach&Surf Flat" + "Casa Rosa Alvor" pair was a clean example.
+- Prices on the mobile Booking.com view default to the user's home currency ("Prices converted to GBP" banner near the top). Use the displayed currency rather than assuming EUR.
+- The "Price for N nights (date — date)" line in the unit card is the most reliable place to read both the date range and the total — more reliable than the header date which can wrap on small screens.
