@@ -18,14 +18,14 @@ export const driveRoutes: DriveRoute[] = [
     from: 'Lisbon',
     to: 'Aljezur',
     waypoints: [
-      [38.666, -9.081], // Lisbon area — east edge of the Lisbon circle, toward Grândola
-      [38.168, -8.567], // Grândola junction — turn off the A2 for the coast
+      [38.666, -9.081], // Lisbon area — east edge of the Lisbon circle, toward Alcácer do Sal
+      [38.373, -8.513], // Alcácer do Sal — leave the A2 here for the coast road
       [37.370, -8.788], // Aljezur area — NE edge of the Aljezur circle
     ],
     distanceKm: 265,
     driveTimeMinutes: 195,
     notes:
-      'A2 motorway down to the Grândola junction, then southwest on the N120 to Aljezur. Porto Covo and Vila Nova de Milfontes are separate stop-off markers.',
+      'A2 motorway down to Alcácer do Sal, then southwest on the IC1 / N120 to Aljezur. Porto Covo and Vila Nova de Milfontes are separate stop-off markers.',
   },
   {
     id: 'route-arrifana-alvor',
