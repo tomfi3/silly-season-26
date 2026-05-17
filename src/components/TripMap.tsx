@@ -1,5 +1,15 @@
-import { useMemo } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, Polyline, AttributionControl, Tooltip } from 'react-leaflet'
+import { useState } from 'react'
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Polyline,
+  AttributionControl,
+  Tooltip,
+  useMap,
+  useMapEvents,
+} from 'react-leaflet'
 import type { LatLngBoundsExpression } from 'leaflet'
 import { allLocations, driveRoutes, trips } from '../data'
 import type { Category, Location, TripId } from '../data/types'
@@ -17,19 +27,20 @@ const INITIAL_BOUNDS: LatLngBoundsExpression = [
   [39.85, -7.60], // NE (Nazaré / inland buffer)
 ]
 
-export function TripMap({ activeTrips, activeCategories }: Props) {
-  const visibleLocations = useMemo(
-    () =>
-      allLocations.filter(
-        (l) => activeTrips.has(l.tripId) && activeCategories.has(l.category),
-      ),
-    [activeTrips, activeCategories],
-  )
+// Categories whose labels are always shown. The rest only appear once the
+// user has zoomed in past LABEL_ZOOM_THRESHOLD — keeps the Portugal-wide
+// view from drowning in text.
+const ANCHOR_CATEGORIES: ReadonlySet<Category> = new Set<Category>([
+  'accommodation',
+  'airport',
+])
+const LABEL_ZOOM_THRESHOLD = 9
 
-  const visibleRoutes = useMemo(
-    () => driveRoutes.filter((r) => activeTrips.has(r.tripId)),
-    [activeTrips],
+export function TripMap({ activeTrips, activeCategories }: Props) {
+  const visibleLocations = allLocations.filter(
+    (l) => activeTrips.has(l.tripId) && activeCategories.has(l.category),
   )
+  const visibleRoutes = driveRoutes.filter((r) => activeTrips.has(r.tripId))
 
   return (
     <MapContainer
@@ -64,29 +75,47 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
         )
       })}
 
-      {visibleLocations.map((location) => {
+      <Markers locations={visibleLocations} />
+    </MapContainer>
+  )
+}
+
+function Markers({ locations }: { locations: Location[] }) {
+  const map = useMap()
+  const [zoom, setZoom] = useState<number>(map.getZoom())
+  useMapEvents({
+    zoomend: (e) => setZoom(e.target.getZoom()),
+  })
+
+  return (
+    <>
+      {locations.map((location) => {
         const size = markerSize(location.category)
+        const isAnchor = ANCHOR_CATEGORIES.has(location.category)
+        const showLabel = isAnchor || zoom >= LABEL_ZOOM_THRESHOLD
         return (
           <Marker
             key={location.id}
             position={location.coords}
             icon={buildMarkerIcon(location)}
           >
-            <Tooltip
-              permanent
-              direction="bottom"
-              offset={[0, size / 2 - 2]}
-              className={`location-label location-label--${location.category}`}
-            >
-              {labelFor(location)}
-            </Tooltip>
+            {showLabel && (
+              <Tooltip
+                permanent
+                direction="bottom"
+                offset={[0, size / 2 - 2]}
+                className={`location-label location-label--${location.category}`}
+              >
+                {labelFor(location)}
+              </Tooltip>
+            )}
             <Popup>
               <LocationPopup location={location} />
             </Popup>
           </Marker>
         )
       })}
-    </MapContainer>
+    </>
   )
 }
 
