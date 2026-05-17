@@ -141,3 +141,10 @@ body {
   line-height: 36px;
   font-size: 18px;
 }
+
+/* Map fills the entire screen including behind the iOS status bar; nudge
+   the Leaflet zoom buttons down by the safe-area inset so they don't end
+   up under the time / battery overlay. */
+.leaflet-top {
+  top: env(safe-area-inset-top, 0px);
+}

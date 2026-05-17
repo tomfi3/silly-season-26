@@ -83,8 +83,15 @@ function App() {
 
   return (
     <div
-      className="fixed left-0 right-0 top-0 overflow-hidden"
-      style={{ height: '100dvh' }}
+      className="fixed left-0 right-0 overflow-hidden"
+      style={{
+        // Extend the stage up behind the iOS status bar. `viewport-fit=cover`
+        // lets us paint there, but `top: 0` is still relative to the safe
+        // area by default — so we pull the container up by the safe-area
+        // inset and add the same amount back to its height.
+        top: 'calc(env(safe-area-inset-top, 0px) * -1)',
+        height: 'calc(100dvh + env(safe-area-inset-top, 0px))',
+      }}
     >
       <TripMap
         activeTrips={ALL_TRIPS}
