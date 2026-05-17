@@ -88,4 +88,7 @@ flight, and `'booked'` only on an airline confirmation screenshot with a PNR.
 
 ## Learnings (append-only)
 
-- _(empty)_
+- The mobile "destination > origin" header (`Faro to London`) is more reliable than the small "from / to" detail strip — the latter sometimes truncates ("London Gatwick to Lisbon" vs just "Faro to London"). Read the title first.
+- When the recommended provider is an aggregator (eDreams, Kiwi, Trip.com) and the airline is on its own card below, prefer the **airline's** price and brand for the entry — the aggregator's price moves more and the data point is less stable.
+- For a UK → Portugal flight in June, both endpoints are at UTC+1 (BST / WEST), so the ISO timestamps share an offset. Don't accidentally cross a DST boundary by reusing winter offsets.
+- One-way searches with no return strip still produce a usable entry — just create the matching outbound or return flight independently.

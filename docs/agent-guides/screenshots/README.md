@@ -15,6 +15,7 @@ end-to-end workflow.
 | Skyscanner | Flight search results | [skyscanner-flight-search.md](skyscanner-flight-search.md) | `Flight` (status: option) |
 | Airline site | Booking confirmation | [airline-flight-booking.md](airline-flight-booking.md) | `Flight` (status: booked) |
 | Google Maps | Place card | [google-maps-place.md](google-maps-place.md) | any location type |
+| Notes app | Day-by-day trip plan | [trip-itinerary-notes.md](trip-itinerary-notes.md) | fans out into markers, routes, flights |
 
 ## Adding a new schema
 
