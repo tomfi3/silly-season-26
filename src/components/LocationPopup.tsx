@@ -1,7 +1,34 @@
-import type { Location } from '../data/types'
+import type { Location, LocationStatus } from '../data/types'
 import { getTrip } from '../data/trips'
 import { CATEGORY_LABELS, CategoryIcon } from './icons'
 import { formatDate, formatMoney } from '../utils/format'
+
+const STATUS_LABEL: Record<LocationStatus, string> = {
+  idea: 'Idea',
+  decided: 'Decided',
+  booked: 'Booked',
+}
+
+function StatusBadge({ status }: { status: LocationStatus | undefined }) {
+  if (!status) return null
+  const styles: Record<LocationStatus, string> = {
+    idea: 'border border-slate-300 bg-white text-slate-600',
+    decided: 'border border-slate-900 bg-slate-900 text-white',
+    booked: 'border border-emerald-700 bg-emerald-600 text-white',
+  }
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${styles[status]}`}
+    >
+      {status === 'booked' && (
+        <svg width="9" height="9" viewBox="0 0 8 8" aria-hidden="true">
+          <path d="M1.5 4.2 3.2 5.8 6.5 2.4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )}
+      {STATUS_LABEL[status]}
+    </span>
+  )
+}
 
 interface Props {
   location: Location
@@ -45,9 +72,12 @@ export function LocationPopup({ location }: Props) {
             <CategoryIcon category={location.category} size={13} />
           </span>
           <div className="min-w-0 flex-1">
-            <h3 className="truncate text-[15px] font-semibold leading-tight text-slate-900">
-              {location.name}
-            </h3>
+            <div className="flex items-start justify-between gap-1.5">
+              <h3 className="min-w-0 flex-1 truncate text-[15px] font-semibold leading-tight text-slate-900">
+                {location.name}
+              </h3>
+              <StatusBadge status={location.status} />
+            </div>
             <p className="mt-0.5 text-[11px] uppercase tracking-wide text-slate-500">
               {CATEGORY_LABELS[location.category]} · {trip.name}
             </p>
@@ -88,7 +118,6 @@ function CategoryDetails({ location }: { location: Location }) {
       return (
         <FactGrid
           items={[
-            ['Status', location.bookingStatus ?? '—'],
             ['Price / night', formatMoney(location.pricePerNight)],
             ['Check-in', formatDate(location.checkIn)],
             ['Check-out', formatDate(location.checkOut)],

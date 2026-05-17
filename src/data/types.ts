@@ -43,6 +43,23 @@ export interface ExternalLink {
   url: string
 }
 
+/**
+ * Universal status across every item on the map.
+ *
+ * - 'idea'    — candidate, not committed. Default for anything from a screenshot.
+ * - 'decided' — we're definitely going there / staying there / doing this.
+ * - 'booked'  — paid for / reserved with a booking reference.
+ *
+ * For places that can't be "booked" (beach, scenic, surf spot), only
+ * 'idea' and 'decided' are meaningful — convention, not a type constraint.
+ *
+ * Marker rendering:
+ *   idea    → hollow pill (muted)
+ *   decided → solid pill (default)
+ *   booked  → solid pill + small check overlay
+ */
+export type LocationStatus = 'idea' | 'decided' | 'booked'
+
 /** Fields shared by every location-style entry. */
 export interface BaseLocation {
   /** Unique slug across ALL locations. Lowercase, kebab-case. */
@@ -58,9 +75,12 @@ export interface BaseLocation {
   links?: ExternalLink[]
   /** Free-form tags. Useful for future filtering. */
   tags?: string[]
+  /**
+   * Defaults to 'idea' when omitted. Set explicitly when committing to a place
+   * ('decided') or once a booking exists ('booked'). See LocationStatus.
+   */
+  status?: LocationStatus
 }
-
-export type BookingStatus = 'considering' | 'shortlisted' | 'booked'
 
 export interface Accommodation extends BaseLocation {
   category: 'accommodation'
@@ -70,8 +90,7 @@ export interface Accommodation extends BaseLocation {
   /** ISO date. */
   checkOut?: string
   guests?: number
-  bookingStatus?: BookingStatus
-  /** Provider reference number, if booked. */
+  /** Provider reference number — only set once status === 'booked'. */
   bookingRef?: string
   amenities?: string[]
 }
@@ -159,13 +178,6 @@ export interface Traveller {
 
 export type FlightDirection = 'outbound' | 'return'
 
-/**
- * Defaults to 'option' for anything sourced from a search-results screenshot
- * (Skyscanner etc). Set to 'booked' only when there's a confirmation /
- * booking reference. See docs/agent-guides/from-screenshots.md.
- */
-export type FlightStatus = 'option' | 'booked'
-
 export interface Flight {
   id: string
   travellerId: Traveller['id']
@@ -175,7 +187,12 @@ export interface Flight {
   /** ISO datetime with timezone offset, e.g. "2026-08-12T18:40:00+01:00". */
   departure: string
   arrival: string
-  status?: FlightStatus
+  /**
+   * Defaults to 'idea' when omitted. Use the shared LocationStatus values.
+   * 'decided' = we've agreed to take this specific flight but haven't booked;
+   * 'booked' = a PNR / booking ref exists.
+   */
+  status?: LocationStatus
   airline?: string
   flightNumber?: string
   bookingRef?: string

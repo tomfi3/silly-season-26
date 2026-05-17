@@ -1,9 +1,9 @@
 import type { Accommodation } from './types'
 
 /**
- * Accommodation options. `bookingStatus` distinguishes considering vs booked —
- * the marker uses a hollow ring for "considering"/"shortlisted" and a filled
- * dot for "booked".
+ * Accommodation options. Use `status: 'idea' | 'decided' | 'booked'` to mark
+ * commitment. The marker renders hollow for 'idea', solid for 'decided', and
+ * solid + check for 'booked'. See LocationStatus in src/data/types.ts.
  */
 export const accommodation: Accommodation[] = [
   {
@@ -15,6 +15,6 @@ export const accommodation: Accommodation[] = [
     description: 'Placeholder pin near Príncipe Real. Replace with the real option once we agree.',
     pricePerNight: { amount: 140, currency: 'EUR' },
     guests: 3,
-    bookingStatus: 'considering',
+    status: 'idea',
   },
 ]
