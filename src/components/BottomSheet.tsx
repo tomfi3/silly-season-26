@@ -81,9 +81,10 @@ export function BottomSheet({ snap, onSnapChange, peek, children }: Props) {
     setDragDelta(0)
   }
 
-  // Apple Maps lifts the half-snap card off the screen edges so it floats
-  // as a discrete object; peek and full sit edge-to-edge.
-  const isFloating = snap === 'half'
+  // Apple Maps floats the minimised and half-snap states as a discrete
+  // card with rounded corners on all sides; full snap drops to edge-to-
+  // edge so the content has room.
+  const isFloating = snap === 'peek' || snap === 'half'
   const sideInset = isFloating ? 8 : 0
   const bottomInsetPx = isFloating ? 8 : 0
   const easing = 'cubic-bezier(0.32, 0.72, 0, 1)'
