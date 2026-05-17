@@ -96,6 +96,30 @@ body {
   letter-spacing: 0.06em;
 }
 
+/* Small "NN" pill sitting at the centre of each base-area circle. The
+   number of nights is also rendered in the circle's click popup. */
+.leaflet-tooltip.base-area-badge {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  pointer-events: none;
+}
+.leaflet-tooltip.base-area-badge::before {
+  display: none;
+}
+.base-area-badge__pill {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1.5px solid;
+  background: rgb(255 255 255 / 0.92);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 14px;
+}
+
 
 /* Hide attribution flag, keep credit line readable */
 .leaflet-control-attribution {

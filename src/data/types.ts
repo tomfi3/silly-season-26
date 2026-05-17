@@ -231,5 +231,7 @@ export interface BaseArea {
   coords: [number, number]
   /** Radius in kilometres. Pick so the circle reaches the furthest place we'd realistically stay. */
   radiusKm: number
+  /** ISO dates of each night we sleep here, in chronological order. */
+  nights: string[]
   description?: string
 }
