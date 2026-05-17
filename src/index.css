@@ -21,7 +21,11 @@
 }
 
 html, body, #root {
-  height: 100%;
+  /* `100dvh` follows iOS Safari's URL bar — the map fills the actually
+     visible viewport rather than spilling behind the toolbar. Falls back
+     to 100vh on browsers without dvh support. */
+  height: 100vh;
+  height: 100dvh;
   margin: 0;
   padding: 0;
 }
@@ -29,7 +33,9 @@ html, body, #root {
 body {
   font-family: var(--font-sans);
   color: var(--color-ink);
-  background: var(--color-surface);
+  /* Match the Leaflet container background so any sub-pixel gap (during
+     resize / orientation change) reads as ocean, not a flash of white. */
+  background: #eef2f7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overscroll-behavior: none;     /* prevent pull-to-refresh on mobile while panning map */

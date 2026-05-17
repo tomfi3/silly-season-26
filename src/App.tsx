@@ -82,7 +82,10 @@ function App() {
     )
 
   return (
-    <div className="fixed inset-0 overflow-hidden">
+    <div
+      className="fixed left-0 right-0 top-0 overflow-hidden"
+      style={{ height: '100dvh' }}
+    >
       <TripMap
         activeTrips={ALL_TRIPS}
         activeCategories={ALL_CATEGORIES}
