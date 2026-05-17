@@ -16,7 +16,7 @@ export const trips: Trip[] = [
   {
     id: 'west-coast',
     name: 'West Coast road trip',
-    blurb: 'Comporta → Costa Vicentina → SW corner. Surf, cliffs, scenic drives.',
+    blurb: 'Costa Vicentina → SW corner. Surf, cliffs, scenic drives.',
     color: '#f59e0b',
   },
   {

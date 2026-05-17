@@ -2,17 +2,6 @@ import type { ScenicSpot } from './types'
 
 export const scenicSpots: ScenicSpot[] = [
   {
-    id: 'scenic-comporta',
-    name: 'Comporta',
-    category: 'scenic',
-    tripId: 'west-coast',
-    coords: [38.38059, -8.78608],
-    description:
-      'Low-key village across the Sado estuary from Setúbal, surrounded by rice paddies and pine. Long white-sand beaches a short drive from the centre — a natural first stop heading south from Lisbon.',
-    bestTime: 'midday',
-    tags: ['road-trip-stop', 'alentejo'],
-  },
-  {
     id: 'scenic-porto-covo',
     name: 'Porto Covo',
     category: 'scenic',

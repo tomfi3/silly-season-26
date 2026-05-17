@@ -20,7 +20,7 @@ export const driveRoutes: DriveRoute[] = [
     distanceKm: 265,
     driveTimeMinutes: 195,
     notes:
-      'A2 motorway down to the Grândola junction, then southwest on the N120 to Aljezur. Day stops (Comporta, Porto Covo, Vila Nova de Milfontes) are separate markers.',
+      'A2 motorway down to the Grândola junction, then southwest on the N120 to Aljezur. Day stops (Porto Covo, Vila Nova de Milfontes) are separate markers.',
   },
   {
     id: 'route-arrifana-alvor',

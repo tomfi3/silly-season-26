@@ -8,7 +8,7 @@ via its `tripId` field, and inherits that part's colour.
 | `tripId` | Name | Colour token | Hex | Scope |
 | --- | --- | --- | --- | --- |
 | `lisbon` | Lisbon | `--color-trip-lisbon` | `#d946ef` (fuchsia) | Lisbon city + day trips reachable without committing to the road trip |
-| `west-coast` | West Coast road trip | `--color-trip-westcoast` | `#f59e0b` (amber) | Everything from leaving Lisbon to arriving at Alvor — Comporta, Costa Vicentina, Aljezur, the SW corner (incl. Sagres + Cabo de São Vicente), Lagos |
+| `west-coast` | West Coast road trip | `--color-trip-westcoast` | `#f59e0b` (amber) | Everything from leaving Lisbon to arriving at Alvor — Costa Vicentina, Aljezur, the SW corner (incl. Sagres + Cabo de São Vicente), Lagos |
 | `algarve` | Algarve | `--color-trip-algarve` | `#14b8a6` (teal) | Based in Alvor and east — Silves, Seven Hanging Valleys, Tavira, Faro |
 
 ## Picking the right one
@@ -23,7 +23,7 @@ That puts a few non-obvious places on the West Coast side of the line — they s
 - **Cabo de São Vicente, Fortaleza de Sagres**: `west-coast`. Visited on the Arrifana → Sagres → Alvor drive day.
 - **Lagos**: `west-coast`. Same drive day, the lunch / stretch stop on the way east.
 - **Costa Vicentina beaches & surf (Bordeira, Amado, Arrifana, Monte Clérigo, Odeceixe)**: `west-coast`. The whole road-trip leg.
-- **Comporta / Porto Covo / Vila Nova de Milfontes**: `west-coast`. Stops on the Lisbon → Arrifana drive.
+- **Porto Covo / Vila Nova de Milfontes**: `west-coast`. Stops on the Lisbon → Arrifana drive.
 
 And on the Algarve side:
 
