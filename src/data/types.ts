@@ -214,3 +214,22 @@ export interface DriveRoute {
   driveTimeMinutes?: number
   notes?: string
 }
+
+// ---------- Base areas ----------
+
+/**
+ * A "where we're based" zone — a thick circle drawn around a town to
+ * indicate the broad area we'll sleep in for a given leg, without
+ * committing to a specific accommodation. Route polylines terminate at
+ * the circle boundary rather than at a pinpoint hotel.
+ */
+export interface BaseArea {
+  id: string
+  name: string
+  tripId: TripId
+  /** Centre of the circle, [lat, lng]. */
+  coords: [number, number]
+  /** Radius in kilometres. Pick so the circle reaches the furthest place we'd realistically stay. */
+  radiusKm: number
+  description?: string
+}

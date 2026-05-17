@@ -1,58 +1,63 @@
 import type { DriveRoute } from './types'
 
 /**
- * Drive routes drawn as polylines. Kept deliberately simple — straight
- * line segments between the day's anchor points, not the real road shape.
- * The stop-offs are independent markers, not route waypoints.
+ * Drive routes drawn as polylines. Straight schematic lines between the
+ * day's anchor points — not real road shape.
+ *
+ * Endpoints sit on the boundary of the relevant `baseAreas.ts` circle
+ * rather than at a specific accommodation, so the visual reads as
+ * "drive into this area" rather than "drive to this hotel". Specific
+ * stop-offs (Cabo de São Vicente, Lagos, Porto Covo, etc.) stay on the
+ * map as independent markers.
  */
 export const driveRoutes: DriveRoute[] = [
   {
     id: 'route-lisbon-arrifana',
     tripId: 'west-coast',
-    label: 'Lisbon → Arrifana',
+    label: 'Lisbon → Aljezur',
     from: 'Lisbon',
-    to: 'Arrifana / Aljezur',
+    to: 'Aljezur',
     waypoints: [
-      [38.72230, -9.13930], // Lisbon
-      [38.16800, -8.56700], // Grândola junction (leave A2 for the coast)
-      [37.29745, -8.85623], // Arrifana
+      [38.666, -9.081], // Lisbon area — east edge of the Lisbon circle, toward Grândola
+      [38.168, -8.567], // Grândola junction — turn off the A2 for the coast
+      [37.370, -8.788], // Aljezur area — NE edge of the Aljezur circle
     ],
     distanceKm: 265,
     driveTimeMinutes: 195,
     notes:
-      'A2 motorway down to the Grândola junction, then southwest on the N120 to Aljezur. Day stops (Porto Covo, Vila Nova de Milfontes) are separate markers.',
+      'A2 motorway down to the Grândola junction, then southwest on the N120 to Aljezur. Porto Covo and Vila Nova de Milfontes are separate stop-off markers.',
   },
   {
     id: 'route-arrifana-alvor',
     tripId: 'west-coast',
-    label: 'Arrifana → Sagres → Alvor',
-    from: 'Arrifana / Aljezur',
-    to: 'Alvor',
+    label: 'Aljezur → Sagres → Portimão',
+    from: 'Aljezur',
+    to: 'Portimão',
     waypoints: [
-      [37.29745, -8.85623], // Arrifana
-      [37.00080, -8.94770], // Sagres
-      [37.13580, -8.59440], // Alvor
+      [37.266, -8.826], // Aljezur area — SW edge toward Sagres
+      [37.001, -8.948], // Sagres
+      [37.117, -8.601], // Portimão area — SW edge toward Sagres
     ],
     distanceKm: 95,
     driveTimeMinutes: 110,
     notes:
-      'Down the west coast to the SW corner, then east along the EN125 to Alvor. Cabo de São Vicente and Lagos are separate stop-off markers.',
+      'Down the west coast to the SW corner, then east along the EN125 into the Portimão area. Cabo de São Vicente and Lagos are separate stop-off markers.',
   },
   {
     id: 'route-alvor-tavira-fao',
     tripId: 'algarve',
-    label: 'Alvor → Tavira → Faro → Alvor',
-    from: 'Alvor',
-    to: 'Alvor',
+    label: 'Portimão → Tavira → Faro → Portimão',
+    from: 'Portimão',
+    to: 'Portimão',
     waypoints: [
-      [37.13580, -8.59440], // Alvor
-      [37.12730, -7.64910], // Tavira
-      [37.01440, -7.96590], // Faro (FAO airport)
-      [37.13580, -8.59440], // Alvor
+      [37.137, -8.470], // Portimão area — east edge toward Tavira
+      [37.127, -7.649], // Tavira
+      [37.014, -7.966], // Faro (FAO airport)
+      [37.137, -8.470], // back to Portimão east edge
     ],
     distanceKm: 230,
     driveTimeMinutes: 170,
     notes:
-      'Day-trip loop on the A22 — Tavira for the morning, drop Tom at FAO for his 19:20 flight, then back to Alvor.',
+      'Day-trip loop on the A22 — Tavira for the morning, drop Tom at FAO for his 19:20 flight, then back into the Portimão area.',
   },
 ]

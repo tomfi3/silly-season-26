@@ -5,13 +5,14 @@ import {
   Marker,
   Popup,
   Polyline,
+  Circle,
   AttributionControl,
   Tooltip,
   useMap,
   useMapEvents,
 } from 'react-leaflet'
 import type { LatLngBoundsExpression } from 'leaflet'
-import { allLocations, driveRoutes, trips } from '../data'
+import { allLocations, baseAreas, driveRoutes, trips } from '../data'
 import type { Category, Location, TripId } from '../data/types'
 import { buildMarkerIcon, markerSize } from './markerIcon'
 import { LocationPopup } from './LocationPopup'
@@ -41,6 +42,7 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
     (l) => activeTrips.has(l.tripId) && activeCategories.has(l.category),
   )
   const visibleRoutes = driveRoutes.filter((r) => activeTrips.has(r.tripId))
+  const visibleBaseAreas = baseAreas.filter((a) => activeTrips.has(a.tripId))
 
   return (
     <MapContainer
@@ -57,6 +59,30 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
         maxZoom={19}
       />
       <AttributionControl position="bottomright" prefix={false} />
+
+      {visibleBaseAreas.map((area) => {
+        const trip = trips.find((t) => t.id === area.tripId)
+        const color = trip?.color ?? '#64748b'
+        return (
+          <Circle
+            key={area.id}
+            center={area.coords}
+            radius={area.radiusKm * 1000}
+            pathOptions={{
+              color,
+              weight: 3,
+              opacity: 0.85,
+              dashArray: '4 6',
+              fillColor: color,
+              fillOpacity: 0.06,
+            }}
+          >
+            <Tooltip permanent direction="center" className="base-area-label">
+              {area.name}
+            </Tooltip>
+          </Circle>
+        )
+      })}
 
       {visibleRoutes.map((route) => {
         const trip = trips.find((t) => t.id === route.tripId)
