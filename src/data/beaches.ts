@@ -8,10 +8,17 @@ export const beaches: Beach[] = [
     tripId: 'west-coast',
     coords: [37.19360, -8.90500],
     description:
-      'Long, dune-backed Atlantic beach just north of Carrapateira, the largest stretch in the Costa Vicentina natural park. Wild and often near-empty even in summer.',
+      'Three-kilometre dune beach, the wildest stretch on the Costa Vicentina. Big surf and small crowds even in August — bring a windbreak.',
     bestFor: ['cliffs', 'sunbathing', 'surf-watching'],
     facilities: ['parking'],
     tags: ['costa-vicentina', 'aljezur'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Praia_da_Bordeira_(14304624069).jpg/1280px-Praia_da_Bordeira_(14304624069).jpg',
+        caption: 'Praia da Bordeira dunes',
+        credit: 'Wikimedia / CC BY-SA',
+      },
+    ],
   },
   {
     id: 'beach-praia-do-monte-clerigo',
@@ -20,7 +27,7 @@ export const beaches: Beach[] = [
     tripId: 'west-coast',
     coords: [37.34128, -8.85312],
     description:
-      'Family-friendly cove on the Aljezur coast with a small cluster of beach houses and a couple of seasonal cafés. Sheltered enough for a swim between surf sessions.',
+      'Mellow cove 10 min north of Aljezur. Sheltered enough for swimming, two cafés on the sand, easy parking. The fallback when the open coast is too rough.',
     bestFor: ['swimming', 'sunbathing'],
     facilities: ['parking', 'cafe'],
     tags: ['aljezur'],
@@ -32,9 +39,16 @@ export const beaches: Beach[] = [
     tripId: 'west-coast',
     coords: [37.44388, -8.79750],
     description:
-      'Half-moon beach at the mouth of the Seixe river, on the Alentejo / Algarve border. Calm river-side flats one half, full Atlantic surf the other.',
+      'Half-moon at the mouth of the Seixe river. River-flat for paddling, full Atlantic on the seaward side — best of both halves of the family in one beach.',
     bestFor: ['swimming', 'kids', 'surf-watching'],
     facilities: ['parking', 'cafe', 'lifeguard'],
     tags: ['costa-vicentina'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Praia_de_Odeceixe_(7667131250).jpg/1280px-Praia_de_Odeceixe_(7667131250).jpg',
+        caption: 'Praia de Odeceixe from the cliffs',
+        credit: 'Wikimedia / CC BY-SA',
+      },
+    ],
   },
 ]

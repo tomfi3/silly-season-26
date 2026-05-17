@@ -13,7 +13,7 @@ export const accommodation: Accommodation[] = [
     tripId: 'west-coast',
     coords: [37.29745, -8.85623],
     description:
-      'Two-bedroom apartment in Vale da Telha near Aljezur, walking distance to Arrifana / Monte Clérigo. 86 m², four beds, free parking. Booking.com review 7.9.',
+      'Two-bedroom flat in Vale da Telha. Sleeps 4 across two bedrooms, 86 m², free parking. 10 min drive to Arrifana for surf, 15 to Monte Clérigo. Booking score 7.9.',
     pricePerNight: { amount: 90, currency: 'GBP' },
     checkIn: '2026-06-11',
     checkOut: '2026-06-13',
@@ -35,7 +35,7 @@ export const accommodation: Accommodation[] = [
     tripId: 'algarve',
     coords: [37.12958, -8.59488],
     description:
-      'One-bedroom house on Rua dos Pescadores in the heart of old Alvor, a couple of streets from the riverfront. 62 m², sleeps three with a sofa bed. Booking.com review 7.8.',
+      'One-bedroom house in old Alvor, two streets from the riverfront and the seafood restaurants. Sleeps 3 (double + sofa bed), 62 m². 7 min to Portimão, 15 to Ponta da Piedade. Booking score 7.8.',
     pricePerNight: { amount: 85, currency: 'GBP' },
     checkIn: '2026-06-13',
     checkOut: '2026-06-17',
@@ -49,5 +49,12 @@ export const accommodation: Accommodation[] = [
       },
     ],
     tags: ['algarve', 'alvor'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Alvor_Harbour_-_The_Algarve,_Portugal_(1468999703).jpg/1280px-Alvor_Harbour_-_The_Algarve,_Portugal_(1468999703).jpg',
+        caption: 'Alvor harbour — Casa Rosa is two streets inland',
+        credit: 'Wikimedia / CC BY-SA',
+      },
+    ],
   },
 ]

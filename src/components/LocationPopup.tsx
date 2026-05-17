@@ -47,7 +47,7 @@ export function LocationPopup({ location }: Props) {
   return (
     <article className="text-[13px] leading-snug text-slate-800">
       {hero ? (
-        <div className="relative h-32 w-full overflow-hidden rounded-t-[14px] bg-slate-200">
+        <div className="relative h-40 w-full overflow-hidden rounded-t-[14px] bg-slate-200">
           <img
             src={hero.url}
             alt={hero.caption ?? location.name}
