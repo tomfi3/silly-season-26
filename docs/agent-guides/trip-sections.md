@@ -7,9 +7,9 @@ via its `tripId` field, and inherits that part's colour.
 
 | `tripId` | Name | Colour token | Hex | Scope |
 | --- | --- | --- | --- | --- |
-| `lisbon` | Lisbon | `--color-trip-lisbon` | `#6366f1` (indigo) | Lisbon city + day trips reachable without committing to the road trip |
+| `lisbon` | Lisbon | `--color-trip-lisbon` | `#d946ef` (fuchsia) | Lisbon city + day trips reachable without committing to the road trip |
 | `west-coast` | West Coast road trip | `--color-trip-westcoast` | `#f59e0b` (amber) | Sintra, Ericeira, Peniche, Óbidos, Nazaré — anywhere on the road trip route |
-| `algarve` | Algarve | `--color-trip-algarve` | `#f43f5e` (rose) | South coast, Lagos through Faro |
+| `algarve` | Algarve | `--color-trip-algarve` | `#14b8a6` (teal) | South coast, Lagos through Faro |
 
 ## Picking the right one
 

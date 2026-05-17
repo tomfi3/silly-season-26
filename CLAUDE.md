@@ -8,9 +8,9 @@ The trip is split into three parts:
 
 | Trip part | Colour | Where |
 | --- | --- | --- |
-| **Lisbon** | indigo `#6366f1` | City days, day trips out of town |
+| **Lisbon** | fuchsia `#d946ef` | City days, day trips out of town |
 | **West Coast road trip** | amber `#f59e0b` | Sintra → Ericeira → Peniche → Nazaré |
-| **Algarve** | rose `#f43f5e` | Beaches, caves, south coast |
+| **Algarve** | teal `#14b8a6` | Beaches, caves, south coast |
 
 Three travellers fly in/out at different times. The map shows accommodation,
 things to do, beaches, surf spots, hikes, scenic spots, restaurants, drive routes

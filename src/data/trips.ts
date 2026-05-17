@@ -11,7 +11,7 @@ export const trips: Trip[] = [
     id: 'lisbon',
     name: 'Lisbon',
     blurb: 'City days — food, viewpoints, beach trips out of town.',
-    color: '#6366f1',
+    color: '#d946ef',
   },
   {
     id: 'west-coast',
@@ -23,7 +23,7 @@ export const trips: Trip[] = [
     id: 'algarve',
     name: 'Algarve',
     blurb: 'Beaches, caves, slow days in the south.',
-    color: '#f43f5e',
+    color: '#14b8a6',
   },
 ]
 

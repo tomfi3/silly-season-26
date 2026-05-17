@@ -4,9 +4,9 @@
 /* ---------- Design tokens ---------- */
 @theme {
   /* Trip colours — used by markers, legend, routes. Keep in sync with src/data/trips.ts. */
-  --color-trip-lisbon: #6366f1;       /* indigo */
-  --color-trip-westcoast: #f59e0b;    /* amber */
-  --color-trip-algarve: #f43f5e;      /* rose */
+  --color-trip-lisbon: #d946ef;       /* fuchsia — matches notes highlight */
+  --color-trip-westcoast: #f59e0b;    /* amber — matches notes highlight */
+  --color-trip-algarve: #14b8a6;      /* teal — matches notes highlight */
 
   /* Surface */
   --color-ink: #0b1020;
