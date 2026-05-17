@@ -1,14 +1,16 @@
 import { useMemo, useState } from 'react'
 import { TripMap } from './components/TripMap'
-import { Legend } from './components/Legend'
 import { BottomSheet, type SheetSnap } from './components/BottomSheet'
 import { TripOverview } from './components/TripOverview'
 import { LocationCard, BaseAreaCard } from './components/SheetCards'
 import { allLocations, baseAreas } from './data'
 import type { Category, TripId } from './data/types'
 
-const ALL_TRIPS: TripId[] = ['lisbon', 'west-coast', 'algarve']
-const ALL_CATEGORIES: Category[] = [
+// Filters default to "show all" — the dedicated filter UI was retired in
+// favour of the bottom sheet doing all the heavy lifting. Reintroduce if
+// we end up needing to hide trip parts or categories.
+const ALL_TRIPS: ReadonlySet<TripId> = new Set<TripId>(['lisbon', 'west-coast', 'algarve'])
+const ALL_CATEGORIES: ReadonlySet<Category> = new Set<Category>([
   'accommodation',
   'activity',
   'beach',
@@ -17,7 +19,7 @@ const ALL_CATEGORIES: Category[] = [
   'scenic',
   'restaurant',
   'airport',
-]
+])
 
 export type Selection =
   | { kind: 'location'; id: string }
@@ -25,32 +27,12 @@ export type Selection =
   | null
 
 function App() {
-  const [activeTrips, setActiveTrips] = useState<Set<TripId>>(
-    () => new Set(ALL_TRIPS),
-  )
-  const [activeCategories, setActiveCategories] = useState<Set<Category>>(
-    () => new Set(ALL_CATEGORIES),
-  )
-  const [legendOpen, setLegendOpen] = useState(false)
   const [selection, setSelection] = useState<Selection>(null)
   const [sheetSnap, setSheetSnap] = useState<SheetSnap>('peek')
 
-  const toggleTrip = (id: TripId) => {
-    setActiveTrips((prev) => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
-  }
-
-  const toggleCategory = (c: Category) => {
-    setActiveCategories((prev) => {
-      const next = new Set(prev)
-      next.has(c) ? next.delete(c) : next.add(c)
-      return next
-    })
-  }
-
+  // Selecting a marker keeps the sheet at whatever snap the user already
+  // left it on (so switching from one card to another is seamless). Only
+  // bumps a fully-peeked sheet up to half so the card is actually visible.
   const selectLocation = (id: string) => {
     setSelection({ kind: 'location', id })
     if (sheetSnap === 'peek') setSheetSnap('half')
@@ -61,8 +43,11 @@ function App() {
     if (sheetSnap === 'peek') setSheetSnap('half')
   }
 
+  // Clearing (tapping the map background or the close button) pushes the
+  // sheet back down to peek — mirrors how Apple Maps dismisses a place card.
   const clearSelection = () => {
     setSelection(null)
+    setSheetSnap('peek')
   }
 
   const selected = useMemo(() => {
@@ -99,19 +84,11 @@ function App() {
   return (
     <div className="fixed inset-0 overflow-hidden">
       <TripMap
-        activeTrips={activeTrips}
-        activeCategories={activeCategories}
+        activeTrips={ALL_TRIPS}
+        activeCategories={ALL_CATEGORIES}
         onSelectLocation={selectLocation}
         onSelectBaseArea={selectBaseArea}
         onDeselect={clearSelection}
-      />
-      <Legend
-        activeTrips={activeTrips}
-        onToggleTrip={toggleTrip}
-        activeCategories={activeCategories}
-        onToggleCategory={toggleCategory}
-        open={legendOpen}
-        onToggleOpen={() => setLegendOpen((o) => !o)}
       />
 
       <BottomSheet snap={sheetSnap} onSnapChange={setSheetSnap} peek={peek}>

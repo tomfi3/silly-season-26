@@ -16,8 +16,8 @@ import type { Category, Location, TripId } from '../data/types'
 import { buildMarkerIcon, markerSize } from './markerIcon'
 
 interface Props {
-  activeTrips: Set<TripId>
-  activeCategories: Set<Category>
+  activeTrips: ReadonlySet<TripId>
+  activeCategories: ReadonlySet<Category>
   onSelectLocation: (id: string) => void
   onSelectBaseArea: (id: string) => void
   onDeselect: () => void

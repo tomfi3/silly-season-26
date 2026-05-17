@@ -81,15 +81,25 @@ export function BottomSheet({ snap, onSnapChange, peek, children }: Props) {
     setDragDelta(0)
   }
 
+  // Apple Maps lifts the half-snap card off the screen edges so it floats
+  // as a discrete object; peek and full sit edge-to-edge.
+  const isFloating = snap === 'half'
+  const sideInset = isFloating ? 8 : 0
+  const bottomInsetPx = isFloating ? 8 : 0
+  const easing = 'cubic-bezier(0.32, 0.72, 0, 1)'
+
   return (
     <div
-      className="pointer-events-auto fixed inset-x-0 bottom-0 z-[1100] mx-auto flex max-w-2xl flex-col rounded-t-3xl bg-white shadow-[0_-10px_30px_-10px_rgba(15,23,42,0.22)]"
+      className="pointer-events-auto fixed z-[1100] mx-auto flex max-w-2xl flex-col bg-white shadow-[0_-10px_30px_-10px_rgba(15,23,42,0.22)]"
       style={{
+        left: `${sideInset}px`,
+        right: `${sideInset}px`,
+        bottom: `calc(env(safe-area-inset-bottom) + ${bottomInsetPx}px)`,
         height: `${effectiveHeight}px`,
+        borderRadius: isFloating ? '22px' : '22px 22px 0 0',
         transition: isDraggingRef.current
           ? 'none'
-          : 'height 280ms cubic-bezier(0.32, 0.72, 0, 1)',
-        paddingBottom: 'env(safe-area-inset-bottom)',
+          : `height 280ms ${easing}, left 240ms ${easing}, right 240ms ${easing}, bottom 240ms ${easing}, border-radius 240ms ${easing}`,
       }}
       role="dialog"
       aria-label="Trip details"
