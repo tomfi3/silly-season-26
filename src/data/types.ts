@@ -159,6 +159,13 @@ export interface Traveller {
 
 export type FlightDirection = 'outbound' | 'return'
 
+/**
+ * Defaults to 'option' for anything sourced from a search-results screenshot
+ * (Skyscanner etc). Set to 'booked' only when there's a confirmation /
+ * booking reference. See docs/agent-guides/from-screenshots.md.
+ */
+export type FlightStatus = 'option' | 'booked'
+
 export interface Flight {
   id: string
   travellerId: Traveller['id']
@@ -168,6 +175,7 @@ export interface Flight {
   /** ISO datetime with timezone offset, e.g. "2026-08-12T18:40:00+01:00". */
   departure: string
   arrival: string
+  status?: FlightStatus
   airline?: string
   flightNumber?: string
   bookingRef?: string

@@ -18,17 +18,33 @@ and airports.
 
 ---
 
-## What to do before adding content
+## Most content arrives as screenshots
 
-Read these guides — they are the contract for how the codebase stays clean and
-the map stays useful:
+The user typically shares a Booking.com page, Skyscanner result, airline
+confirmation, or Google Maps place card — and you turn it into an entry in
+`src/data/`. There is a dedicated, self-evolving system for this:
+
+- **[`docs/agent-guides/from-screenshots.md`](docs/agent-guides/from-screenshots.md)** — the end-to-end workflow (read this first when handed a screenshot)
+- **[`docs/agent-guides/screenshots/`](docs/agent-guides/screenshots/)** — one schema file per known screenshot type. Each schema describes how to recognise the type, what fields are reliable, what to web-search, and how it maps to our data types. Agents **append to the schema's Learnings section** after every extraction so the system gets sharper over time.
+
+If a screenshot doesn't fit any existing schema: **stop and propose a new one** to the user before processing — see the "Adding a new schema" section of `from-screenshots.md`.
+
+Items from screenshots are almost always **options**, not confirmed plans. The
+default for accommodation is `bookingStatus: 'considering'`; for flights,
+`status: 'option'`. Only promote to `'booked'` when an actual confirmation /
+PNR appears.
+
+## Other guides
+
+Read these as needed — they are the contract for how the codebase stays clean
+and the map stays useful:
 
 1. **[`docs/agent-guides/README.md`](docs/agent-guides/README.md)** — index of all guides
 2. **[`docs/agent-guides/content-conventions.md`](docs/agent-guides/content-conventions.md)** — universal rules (coords precision, photos, descriptions, IDs)
 3. **[`docs/agent-guides/trip-sections.md`](docs/agent-guides/trip-sections.md)** — the three trip parts and their colours
-4. **[`docs/agent-guides/adding-locations.md`](docs/agent-guides/adding-locations.md)** — how to add accommodation / activities / beaches / surf / hikes / scenic / restaurants
+4. **[`docs/agent-guides/adding-locations.md`](docs/agent-guides/adding-locations.md)** — manual location adds (when you're not working from a screenshot)
 5. **[`docs/agent-guides/adding-routes.md`](docs/agent-guides/adding-routes.md)** — how to add a drive route
-6. **[`docs/agent-guides/adding-flights.md`](docs/agent-guides/adding-flights.md)** — how to add a flight or traveller
+6. **[`docs/agent-guides/adding-flights.md`](docs/agent-guides/adding-flights.md)** — flights / travellers structure
 7. **[`docs/agent-guides/deployment.md`](docs/agent-guides/deployment.md)** — how the GitHub Pages deploy works
 
 Always verify your change compiles before claiming you're done:
@@ -86,6 +102,13 @@ silly-season-26/
 - **React-Leaflet 5** + **Leaflet 1.9** for the map
 - **CARTO Voyager** tiles (no API key)
 - **GitHub Pages** for hosting — built by GitHub Actions on push to `main`
+
+## Mobile use
+
+A lot of edits will happen via Claude Code on mobile — slower at file reads
+and web searches. Optimise: one screenshot per turn, read the schema once,
+batch web searches, use `// TODO verify on desktop` comments rather than
+blocking on a hard-to-resolve field. Commit after each screenshot.
 
 ## Rules of the road
 

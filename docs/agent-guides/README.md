@@ -3,15 +3,19 @@
 Everything an agent needs to add content to the Silly Season '26 trip map
 correctly and consistently.
 
-> 👋 **Start here:** read [`content-conventions.md`](content-conventions.md). It applies to every type of edit.
+> 👋 **If the user just shared a screenshot:** read [`from-screenshots.md`](from-screenshots.md) and match the screenshot to a file in [`screenshots/`](screenshots/). That's the most common workflow.
+>
+> 👋 **Otherwise, start with** [`content-conventions.md`](content-conventions.md). It applies to every type of edit.
 
 ## Guides
 
 | File | When to read it |
 | --- | --- |
+| **[from-screenshots.md](from-screenshots.md)** | **When the user shares a screenshot.** Workflow + how schemas self-improve. |
+| **[screenshots/](screenshots/)** | One file per type of screenshot (Booking.com, Skyscanner, Google Maps, etc.). Match → read → process. |
 | [content-conventions.md](content-conventions.md) | Always. Universal rules for IDs, coordinates, photos, descriptions. |
 | [trip-sections.md](trip-sections.md) | When choosing which `tripId` a new entry belongs to. |
-| [adding-locations.md](adding-locations.md) | When adding any pin to the map (stay, activity, beach, surf, hike, scenic, restaurant). |
+| [adding-locations.md](adding-locations.md) | Manual location adds (not from a screenshot). Has templates for every category. |
 | [adding-routes.md](adding-routes.md) | When adding a drive between two places. |
 | [adding-flights.md](adding-flights.md) | When adding a flight or onboarding a new traveller. |
 | [deployment.md](deployment.md) | When debugging the GitHub Pages build or moving the repo. |
