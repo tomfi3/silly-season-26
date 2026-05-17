@@ -29,7 +29,7 @@ export const driveRoutes: DriveRoute[] = [
   },
   {
     id: 'route-arrifana-alvor',
-    tripId: 'algarve',
+    tripId: 'west-coast',
     label: 'Arrifana → Sagres → Alvor',
     from: 'Arrifana / Aljezur',
     to: 'Alvor',

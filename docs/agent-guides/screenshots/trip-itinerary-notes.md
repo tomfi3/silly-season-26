@@ -69,11 +69,13 @@ files. The expected fan-out:
 | `Accom <area> (<property> = £X)` | `accommodation.ts`, but only if there's a Booking.com screenshot for the property | `'idea'` |
 | Flight times inline next to a person's name | `flights.ts` (+ `airports.ts` if a new IATA code appears) | `'idea'` — notes-only flights aren't booked |
 
-Trip-part assignment for ambiguous stops: use the day they appear on. The
-notes group Comporta / Porto Covo / Vila Nova de Milfontes under the
-"Thu — Road Trip" West Coast day, so they're `tripId: 'west-coast'` even
-though `trip-sections.md` previously suggested Comporta could be `algarve`.
-**The notes win** — they're the user's current mental model of the trip.
+Trip-part assignment for ambiguous stops: use the day they appear on, with
+the rule from [trip-sections.md](../trip-sections.md): everything before we
+check in to the Alvor accommodation is `west-coast`, everything from there
+on is `algarve`. The notes group is the source of truth for which day a
+stop falls on — when the notes group Cabo de São Vicente under Sat 13's
+SW-corner drive (before reaching Alvor), it's `west-coast` even though
+geographically it sits on the Algarve coast.
 
 ## Default status
 

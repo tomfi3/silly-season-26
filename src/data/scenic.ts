@@ -38,7 +38,7 @@ export const scenicSpots: ScenicSpot[] = [
     id: 'scenic-cabo-de-sao-vicente',
     name: 'Cabo de São Vicente',
     category: 'scenic',
-    tripId: 'algarve',
+    tripId: 'west-coast',
     coords: [37.02300, -8.99644],
     description:
       'South-westernmost point of mainland Europe — sheer 75 m cliffs, a working lighthouse and big Atlantic views. The road runs out here; sunset is the moment.',
@@ -49,7 +49,7 @@ export const scenicSpots: ScenicSpot[] = [
     id: 'scenic-sagres-fort',
     name: 'Fortaleza de Sagres',
     category: 'scenic',
-    tripId: 'algarve',
+    tripId: 'west-coast',
     coords: [37.00080, -8.94770],
     description:
       'Wind-blasted promontory fort on the cliffs above Sagres town, traditionally tied to Henry the Navigator. Mostly the views and the giant compass rose — but the walk around the headland is the draw.',
@@ -71,7 +71,7 @@ export const scenicSpots: ScenicSpot[] = [
     id: 'scenic-lagos-old-town',
     name: 'Lagos Old Town',
     category: 'scenic',
-    tripId: 'algarve',
+    tripId: 'west-coast',
     coords: [37.10280, -8.67350],
     description:
       'Walled old town with marina, sea-walks out to Ponta da Piedade, and an easy strip of bars and restaurants. The main hub of the western Algarve.',

@@ -8,18 +8,33 @@ via its `tripId` field, and inherits that part's colour.
 | `tripId` | Name | Colour token | Hex | Scope |
 | --- | --- | --- | --- | --- |
 | `lisbon` | Lisbon | `--color-trip-lisbon` | `#d946ef` (fuchsia) | Lisbon city + day trips reachable without committing to the road trip |
-| `west-coast` | West Coast road trip | `--color-trip-westcoast` | `#f59e0b` (amber) | Sintra, Ericeira, Peniche, Óbidos, Nazaré — anywhere on the road trip route |
-| `algarve` | Algarve | `--color-trip-algarve` | `#14b8a6` (teal) | South coast, Lagos through Faro |
+| `west-coast` | West Coast road trip | `--color-trip-westcoast` | `#f59e0b` (amber) | Everything from leaving Lisbon to arriving at Alvor — Comporta, Costa Vicentina, Aljezur, the SW corner (incl. Sagres + Cabo de São Vicente), Lagos |
+| `algarve` | Algarve | `--color-trip-algarve` | `#14b8a6` (teal) | Based in Alvor and east — Silves, Seven Hanging Valleys, Tavira, Faro |
 
 ## Picking the right one
 
-Most decisions are obvious from geography, but a few cases need a rule:
+The cleanest rule for this trip:
 
-- **Sintra / Cabo da Roca**: `west-coast`. They sit on the road-trip route even though they're a day trip from Lisbon.
-- **Caparica / Costa Vicentina sunsets near Lisbon**: `lisbon` if you'd realistically drive back to Lisbon that evening, `west-coast` if you'd overnight up the coast.
-- **A spot near the Lisbon→Algarve drive (Évora, Comporta)**: `algarve` — they're stops on the way south, not separate.
+> **The West Coast leg ends when we arrive at the Alvor accommodation.**
+> Anywhere we visit before then is `west-coast`. From Alvor onwards (including day trips out of Alvor) is `algarve`.
 
-When in doubt, ask the question: *"Which part of the trip am I most likely to be on when I visit this?"*
+That puts a few non-obvious places on the West Coast side of the line — they sit south of the Algarve "geographic" border but happen on a drive day before we check in:
+
+- **Cabo de São Vicente, Fortaleza de Sagres**: `west-coast`. Visited on the Arrifana → Sagres → Alvor drive day.
+- **Lagos**: `west-coast`. Same drive day, the lunch / stretch stop on the way east.
+- **Costa Vicentina beaches & surf (Bordeira, Amado, Arrifana, Monte Clérigo, Odeceixe)**: `west-coast`. The whole road-trip leg.
+- **Comporta / Porto Covo / Vila Nova de Milfontes**: `west-coast`. Stops on the Lisbon → Arrifana drive.
+
+And on the Algarve side:
+
+- **Silves, Tavira, Seven Hanging Valleys, Faro**: `algarve`. Day trips out of Alvor.
+
+Other rules of thumb that still apply:
+
+- **Sintra / Cabo da Roca**: `west-coast`. Road-trip route, even if reached as a day trip from Lisbon.
+- **Caparica / sunsets near Lisbon**: `lisbon` if you'd realistically drive back to Lisbon that evening, `west-coast` if you'd overnight up the coast.
+
+When in doubt, ask: *"Have we checked in at Alvor yet when I'd visit this?"* No → `west-coast`. Yes → `algarve`.
 
 ## Changing the colours
 
