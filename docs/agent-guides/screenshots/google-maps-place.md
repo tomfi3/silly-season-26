@@ -97,8 +97,12 @@ the user to share the URL too, or search Google Maps for the name yourself.
 
 ## Default status
 
-Locations from Google Maps have no status field — they're always "candidate
-places to visit". The user picks which ones to actually do later.
+Omit `status` for non-bookable categories (beach, surf, hike, scenic) — the
+default behaviour renders these as `'decided'` ("we'd visit here"), which is
+what you want for a curated list of places.
+
+For bookable categories (restaurant, activity, accommodation), set
+`status: 'idea'` until the user confirms it's part of the plan.
 
 ## Learnings (append-only)
 

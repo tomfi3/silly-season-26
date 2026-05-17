@@ -52,7 +52,7 @@
 
 ```ts
 // Target: Accommodation
-// Default: bookingStatus: 'considering' (it's an option, not booked)
+// Default: status: 'idea' (candidate, not committed)
 
 {
   id: 'acc-<short-slug>',
@@ -63,7 +63,7 @@
   description: '<1–2 sentences>',
   pricePerNight: { amount: 0, currency: 'EUR' },   // optional — leave off if not seen
   guests: undefined,
-  bookingStatus: 'considering',
+  status: 'idea',
   amenities: ['wifi', 'aircon', 'pool'],
   links: [{ label: 'Booking.com', url: '<from URL bar if visible>' }],
 }
@@ -71,8 +71,8 @@
 
 ## Default status
 
-`bookingStatus: 'considering'`. Promote to `'shortlisted'` if the user calls
-out that this is a top pick, or `'booked'` if they later share a confirmation.
+`status: 'idea'`. Promote to `'decided'` if the user says "let's go with this
+one", or `'booked'` if they later share a confirmation with a `bookingRef`.
 
 ## Learnings (append-only)
 

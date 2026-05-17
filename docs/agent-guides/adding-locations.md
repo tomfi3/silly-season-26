@@ -40,14 +40,14 @@ This guide shows the canonical shape for each category.
   checkIn: '2026-08-12',
   checkOut: '2026-08-16',
   guests: 3,
-  bookingStatus: 'considering',    // 'considering' | 'shortlisted' | 'booked'
-  bookingRef: undefined,
+  status: 'idea',          // 'idea' | 'decided' | 'booked' — see content-conventions.md
+  bookingRef: undefined,   // only set when status === 'booked'
   amenities: ['wifi', 'aircon', 'terrace'],
   links: [{ label: 'Airbnb listing', url: 'https://www.airbnb.com/rooms/...' }],
 }
 ```
 
-- `bookingStatus: 'booked'` renders the marker as a filled pill; anything else renders a hollow ring. Use this to scan the map for booked vs to-do.
+- `status: 'idea'` → hollow muted pill. `status: 'decided'` → solid pill. `status: 'booked'` → solid pill with a green check overlay. Use these to scan the map for what's confirmed vs to-do.
 
 ### Activity
 

@@ -47,8 +47,8 @@ Two cases.
 
 ### Case A — property already has an entry
 
-Update its `pricePerNight`, `checkIn`, `checkOut`, `guests`. Leave
-`bookingStatus` as `'considering'` unless promoted.
+Update its `pricePerNight`, `checkIn`, `checkOut`, `guests`. Leave `status`
+as `'idea'` unless the user has already promoted it.
 
 ```ts
 // Edit src/data/accommodation.ts in place
@@ -69,9 +69,9 @@ Booking.com URL. Pricing without an identifiable property is not actionable.
 
 ## Default status
 
-`bookingStatus: 'considering'`. Pricing screenshots are search-results
-artefacts, not bookings. Promote to `'booked'` only when a confirmation
-screenshot follows.
+`status: 'idea'`. Pricing screenshots are search-results artefacts, not
+bookings. Promote to `'decided'` once the user picks this option, and
+`'booked'` only when a confirmation screenshot follows.
 
 ## Computing per-night price
 

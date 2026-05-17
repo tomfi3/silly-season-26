@@ -69,7 +69,7 @@ Rare for a confirmation screenshot — most fields are explicit.
 ## When this comes in
 
 A confirmation screenshot usually arrives after one or more Skyscanner options
-are already in `flights.ts`. Workflow:
+are already in `flights.ts` (status: `'idea'` or `'decided'`). Workflow:
 
 1. Identify the matching option by airline + departure time.
 2. Update it in place — set `status: 'booked'`, fill `bookingRef` and any

@@ -70,15 +70,18 @@ For ambiguous spots (e.g., a beach between two areas), use the rule in
 [trip-sections.md](trip-sections.md): *"Which part of the trip am I most likely
 to be on when I visit this?"*
 
-### 5. Default to "option"
+### 5. Default to "idea"
 
-Almost everything from a screenshot is a candidate, not a confirmed plan. Default mapping:
+Almost everything from a screenshot is a candidate, not a confirmed plan. Default mapping (see [content-conventions.md](content-conventions.md) for the full status model):
 
-| Type | Default | Override condition |
-| --- | --- | --- |
-| Accommodation | `bookingStatus: 'considering'` | Set `'booked'` only if the screenshot is a confirmation email or post-booking page showing a `bookingRef`. |
-| Flight | `status: 'option'` | Set `'booked'` only if a PNR (6-char booking ref) is visible. |
-| Beach / surf / hike / scenic / restaurant / activity | (no status field — these are always candidate locations) | n/a |
+| Type | Default | Promote to `'decided'` when… | Promote to `'booked'` when… |
+| --- | --- | --- | --- |
+| Accommodation | `status: 'idea'` | the user confirms "yes, this one" | screenshot is a confirmation with `bookingRef` |
+| Flight | `status: 'idea'` | the user picks a specific candidate | airline confirmation screenshot with a PNR |
+| Activity / restaurant | `status: 'idea'` | the user confirms it's part of the plan | reservation confirmation |
+| Beach / surf / hike / scenic | omit `status` (renders as `'decided'`) | n/a — these are always "places to consider visiting" | not applicable |
+
+Demote (e.g. unticking a candidate accommodation) by reverting to `'idea'` or deleting the entry — the user will tell you which.
 
 ### 6. Add the entry
 

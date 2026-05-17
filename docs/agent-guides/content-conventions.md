@@ -3,6 +3,28 @@
 Universal rules for any data added to `src/data/`. These keep the map fast,
 readable, and predictable.
 
+## Status — idea / decided / booked
+
+Every item on the map has an optional `status: 'idea' | 'decided' | 'booked'`.
+Same field name on accommodation, flights, beaches, surf spots — everything.
+
+| Status | Meaning | Marker | When to set |
+| --- | --- | --- | --- |
+| `idea` | Candidate. We're considering it but not committed. | Hollow pill, muted | Default for accommodation / activity / restaurant when added. Default for anything from a screenshot. |
+| `decided` | We're definitely going there / staying there / doing this. | Solid trip-coloured pill | Once the user confirms a place is on the itinerary. |
+| `booked` | Paid for / reserved with a booking reference. | Solid pill + green check overlay | Only when a real booking exists (`bookingRef` for accommodation, PNR for flights, reservation confirmation for restaurants). |
+
+**Defaults when `status` is omitted** (see `resolveStatus` in `src/components/markerIcon.ts`):
+
+- Accommodation / activity / restaurant → treated as `idea`
+- Beach / surf / hike / scenic / airport → treated as `decided`
+
+These defaults exist because a beach pin without explicit status is "a place we'd visit", not "tentative". Bookable categories work the other way — until someone says "yes, this one", they're ideas.
+
+**`booked` is technically valid on any item** but only makes sense for bookable categories (accommodation, flight, activity, restaurant). Don't set `booked` on a beach or hike — there's nothing to book.
+
+## IDs
+
 ## IDs
 
 Every entry needs a unique `id`. Lowercase, kebab-case, prefixed by category.

@@ -51,7 +51,7 @@
 
 ```ts
 // Target: Flight
-// Default status: 'option'
+// Default status: 'idea'
 
 {
   id: 'fl-<travellerId>-<out|ret>-<airline-suffix>',  // e.g. 'fl-p1-out-easyjet'
@@ -61,7 +61,7 @@
   to:   { code: 'LIS', name: 'Lisbon' },
   departure: '2026-08-12T07:25:00+01:00',
   arrival:   '2026-08-12T10:00:00+01:00',
-  status: 'option',
+  status: 'idea',
   airline: 'easyJet',
   flightNumber: undefined,             // often not on Skyscanner — leave off
   cost: { amount: 89, currency: 'GBP' },
@@ -83,8 +83,8 @@ block at the bottom of `flights.ts`).
 
 ## Default status
 
-`status: 'option'`. Promote to `'booked'` only on an airline confirmation
-screenshot with a PNR.
+`status: 'idea'`. Promote to `'decided'` when the user picks a specific
+flight, and `'booked'` only on an airline confirmation screenshot with a PNR.
 
 ## Learnings (append-only)
 

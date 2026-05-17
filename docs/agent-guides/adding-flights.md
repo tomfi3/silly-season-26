@@ -28,19 +28,21 @@ and outgoing connections.
   to:   { code: 'LIS', name: 'Lisbon' },
   departure: '2026-08-12T07:25:00+01:00',
   arrival:   '2026-08-12T10:00:00+01:00',
+  status: 'idea',                  // 'idea' | 'decided' | 'booked'
   airline: 'easyJet',
   flightNumber: 'U28403',
-  bookingRef: 'ABC123',
+  bookingRef: undefined,           // only set when status === 'booked'
   cost: { amount: 89, currency: 'GBP' },
 }
 ```
 
 ### Field rules
 
-- **`id`**: `fl-<travellerId>-<out|ret>` — e.g. `fl-p2-ret`.
+- **`id`**: `fl-<travellerId>-<out|ret>` — e.g. `fl-p2-ret`. When tracking multiple candidate flights, suffix with airline/time: `fl-p1-out-easyjet-0725`.
+- **`status`**: `'idea'` while it's a candidate, `'decided'` once the user picks a specific flight, `'booked'` once a PNR is confirmed. Defaults to `'idea'` if omitted.
 - **`departure` / `arrival`**: ISO 8601 with timezone offset. Use the **local** offset (London: `+01:00` summer, `+00:00` winter; Portugal: `+01:00` summer). The popup formats local time as written.
 - **`from` / `to`**: full airport name in `name`, IATA in `code`. If the airport isn't in `src/data/airports.ts`, **add it there too** — airports are pinned on the map and the flight popup looks them up by IATA.
-- **`bookingRef`**: only set when actually booked.
+- **`bookingRef`**: only set when `status === 'booked'`.
 - **`cost`**: GBP for UK departures, EUR for Portugal departures. Locale-agnostic — the UI formats it.
 
 ## Adding a new traveller (a fourth person joining)
