@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+/* ---------- Design tokens ---------- */
+@theme {
+  /* Trip colours — used by markers, legend, routes. Keep in sync with src/data/trips.ts. */
+  --color-trip-lisbon: #6366f1;       /* indigo */
+  --color-trip-westcoast: #f59e0b;    /* amber */
+  --color-trip-algarve: #f43f5e;      /* rose */
+
+  /* Surface */
+  --color-ink: #0b1020;
+  --color-ink-soft: #334155;
+  --color-ink-muted: #64748b;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f8fafc;
+  --color-border: #e2e8f0;
+
+  /* Font */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;     /* prevent pull-to-refresh on mobile while panning map */
+}
+
+/* ---------- Leaflet overrides ---------- */
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: #eef2f7;
+}
+
+/* Tighter, mobile-friendly popups */
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: 0 12px 32px -8px rgb(15 23 42 / 0.18), 0 2px 6px -1px rgb(15 23 42 / 0.08);
+}
+.leaflet-popup-content {
+  margin: 0;
+  width: 280px !important;
+  max-width: 84vw;
+}
+.leaflet-popup-tip {
+  box-shadow: 0 2px 6px -1px rgb(15 23 42 / 0.08);
+}
+
+/* Custom marker styling (divIcon root) */
+.trip-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Hide attribution flag, keep credit line readable */
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgb(255 255 255 / 0.8) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Map control buttons — slightly larger for mobile touch */
+.leaflet-touch .leaflet-bar a {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 18px;
+}
