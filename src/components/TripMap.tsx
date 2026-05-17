@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, Polyline, AttributionControl } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polyline, AttributionControl, Tooltip } from 'react-leaflet'
 import type { LatLngBoundsExpression } from 'leaflet'
 import { allLocations, driveRoutes, trips } from '../data'
-import type { Category, TripId } from '../data/types'
-import { buildMarkerIcon } from './markerIcon'
+import type { Category, Location, TripId } from '../data/types'
+import { buildMarkerIcon, markerSize } from './markerIcon'
 import { LocationPopup } from './LocationPopup'
 
 interface Props {
@@ -64,17 +64,33 @@ export function TripMap({ activeTrips, activeCategories }: Props) {
         )
       })}
 
-      {visibleLocations.map((location) => (
-        <Marker
-          key={location.id}
-          position={location.coords}
-          icon={buildMarkerIcon(location)}
-        >
-          <Popup>
-            <LocationPopup location={location} />
-          </Popup>
-        </Marker>
-      ))}
+      {visibleLocations.map((location) => {
+        const size = markerSize(location.category)
+        return (
+          <Marker
+            key={location.id}
+            position={location.coords}
+            icon={buildMarkerIcon(location)}
+          >
+            <Tooltip
+              permanent
+              direction="bottom"
+              offset={[0, size / 2 - 2]}
+              className={`location-label location-label--${location.category}`}
+            >
+              {labelFor(location)}
+            </Tooltip>
+            <Popup>
+              <LocationPopup location={location} />
+            </Popup>
+          </Marker>
+        )
+      })}
     </MapContainer>
   )
+}
+
+function labelFor(location: Location): string {
+  if (location.category === 'airport') return location.iata
+  return location.name
 }

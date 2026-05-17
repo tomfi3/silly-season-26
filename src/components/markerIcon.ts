@@ -7,6 +7,10 @@ import { svgGlyphMarkup } from './icons'
  * Build a Leaflet divIcon for a location. The icon is a coloured pill — trip
  * colour as background, white category glyph inside.
  *
+ * Size hierarchy keeps accommodation as the dominant marker (it's where the
+ * trip pivots from one section to the next), with airports a step down, and
+ * everything else compact so the map doesn't feel crowded.
+ *
  * Three visual states driven by `location.status`:
  *   - 'idea'    → hollow pill (muted; trip colour as ring + glyph on white)
  *   - 'decided' → solid pill (default look)
@@ -36,17 +40,35 @@ function resolveStatus(location: Location): LocationStatus {
   }
 }
 
+const MARKER_SIZE: Record<Category, number> = {
+  accommodation: 38,
+  airport: 30,
+  hike: 24,
+  beach: 24,
+  surf: 24,
+  scenic: 24,
+  activity: 24,
+  restaurant: 24,
+}
+
+export function markerSize(category: Category): number {
+  return MARKER_SIZE[category]
+}
+
 export function markerIcon(
   category: Category,
   color: string,
   status: LocationStatus,
 ): L.DivIcon {
+  const size = MARKER_SIZE[category]
+  // Glyph scales with the pill, but with a slight floor so small markers stay legible.
+  const glyphSize = Math.max(13, Math.round(size * 0.54))
   const hollow = status === 'idea'
   const showCheck = status === 'booked'
   const inner = svgGlyphMarkup(category, hollow ? color : '#ffffff')
   const bg = hollow ? '#ffffff' : color
   const stroke = hollow ? color : '#ffffff'
-  const opacity = hollow ? 0.85 : 1
+  const opacity = hollow ? 0.9 : 1
   const checkBadge = showCheck
     ? `
       <div style="
@@ -69,10 +91,10 @@ export function markerIcon(
       </div>`
     : ''
   const html = `
-    <div style="position: relative; width: 32px; height: 32px;">
+    <div style="position: relative; width: ${size}px; height: ${size}px;">
       <div style="
-        width: 32px;
-        height: 32px;
+        width: ${size}px;
+        height: ${size}px;
         border-radius: 999px;
         background: ${bg};
         border: 2px solid ${stroke};
@@ -82,7 +104,7 @@ export function markerIcon(
         align-items: center;
         justify-content: center;
       ">
-        <svg width="16" height="16" viewBox="0 0 16 16" style="display:block">${inner}</svg>
+        <svg width="${glyphSize}" height="${glyphSize}" viewBox="0 0 16 16" style="display:block">${inner}</svg>
       </div>
       ${checkBadge}
     </div>
@@ -90,8 +112,8 @@ export function markerIcon(
   return L.divIcon({
     html,
     className: 'trip-marker',
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    popupAnchor: [0, -16],
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+    popupAnchor: [0, -size / 2],
   })
 }
